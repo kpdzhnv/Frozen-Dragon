@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -35,11 +36,20 @@ public class Player : MonoBehaviour
 		gridPos.z = 0;
 		var cellCenter = grid.CellToWorld(gridPos);
 		var tile = baseTilemap.GetTile(gridPos);
-		Debug.Log($"Tile: {tile.name}");
+		var item = items[targetItem];
+		if (item.tiles.Contains(tile)) {
+			GameObject.Instantiate(item.plant, cellCenter + new Vector3(0, 0.5f, 0), Quaternion.identity);
+			var newTile = item.growTiles[Random.Range(0, item.growTiles.Length)];
+			baseTilemap.SetTile(gridPos, newTile);
+		}
 	}
 
 	void Update()
 	{
+		var step = (int)Input.mouseScrollDelta.y;
+		currentItem = (currentItem + step + items.Length) % items.Length;
+		Debug.Log($"currentItem: {items[currentItem]}");
+
 		var target = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 		var gridPos = grid.WorldToCell(target);
 		gridPos.z = 0;
@@ -47,11 +57,11 @@ public class Player : MonoBehaviour
 		pointer.position = new Vector3(cellCenter.x, cellCenter.y, pointer.position.z);
 		if (Input.GetAxis("Fire1") > 0)
 		{
-
 			dragon.target = new Vector2(cellCenter.x, cellCenter.y);
+			targetItem = currentItem;
 			toDo = true;
 		}
-		if (dragon.Done)
+		if (toDo && dragon.Done)
 			Do();
 	}
 }

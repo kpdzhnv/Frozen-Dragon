@@ -7,5 +7,5 @@ using UnityEngine.Tilemaps;
 public class Item : ScriptableObject {
 	public Tile[] tiles;
 	public Tile[] growTiles;
-	public GameObject value;
+	public GameObject plant;
 }
