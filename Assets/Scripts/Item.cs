@@ -8,4 +8,5 @@ public class Item : ScriptableObject {
 	public Tile[] tiles;
 	public Tile[] growTiles;
 	public GameObject plant;
+	public int profit;
 }

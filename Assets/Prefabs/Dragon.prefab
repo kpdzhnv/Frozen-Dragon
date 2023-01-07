@@ -178,5 +178,7 @@ MonoBehaviour:
   pointerObject: {fileID: 6707510290640597912, guid: 9d9db640994514b498e53a411124398a, type: 3}
   testtile: {fileID: 11400000, guid: 7b43c7f6f4d44274bb42003139c6deb2, type: 2}
   items:
-  - {fileID: 11400000, guid: 8cad5d54a28e3e64fabe3a8aaa109227, type: 2}
-  - {fileID: 11400000, guid: ad01067ae5e533842a2e4c99d4f1d6f4, type: 2}
+  - item: {fileID: 11400000, guid: 8cad5d54a28e3e64fabe3a8aaa109227, type: 2}
+    count: 5
+  - item: {fileID: 11400000, guid: ad01067ae5e533842a2e4c99d4f1d6f4, type: 2}
+    count: 3

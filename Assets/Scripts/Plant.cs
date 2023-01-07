@@ -5,17 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class Plant : MonoBehaviour
 {
-    Tile[] growTiles;
-
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-    }
+    [System.NonSerialized]
+    public bool grown = false;
 
     public void Grown() {
-        Debug.Log($"Grown!!! {transform}");
+        grown = true;
     }
 }
