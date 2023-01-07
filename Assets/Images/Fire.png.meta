@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aa24defe7740a0842b9e908f9d81ae53
+guid: 245ed5d89d4e9f049a94ca4af549f09e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,97 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dragon_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7b686744b82d7e8458e71f2e9724833e
-      internalID: 901275640
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dragon_1
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12a121ecf5ef74847b3618a9e82f0447
-      internalID: -1036996777
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dragon_2
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 344cb045a39d29448966241ae24974df
-      internalID: 566379779
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dragon_3
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f37aacf605b9db6468fd4fe2529b61a9
-      internalID: -729078488
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dragon_4
+      name: Fire_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
-        height: 24
+        width: 55
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f3ceb0462be6ffb48a9f24c0ea254bc5
-      internalID: 205026511
+      spriteID: 07e70f91154b3f74cb75e594145691c2
+      internalID: -1944839972
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dragon_5
+      name: Fire_1
       rect:
         serializedVersion: 2
-        x: 24
+        x: 55
         y: 0
-        width: 24
-        height: 24
+        width: 55
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa498e4090798b64c922d9ba40257bef
-      internalID: 1306356194
+      spriteID: 885412871f24e2d4d9aaccaf9bbafb8a
+      internalID: -1753073983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dragon_6
+      name: Fire_2
       rect:
         serializedVersion: 2
-        x: 48
+        x: 110
         y: 0
-        width: 24
-        height: 24
+        width: 55
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fb4208060e6f444eb2ea1bbe9ad050a
-      internalID: -1635856593
+      spriteID: db2c90fc2bedfaf40abc3dc06ddf2fbd
+      internalID: -238171371
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dragon_7
+      name: Fire_3
       rect:
         serializedVersion: 2
-        x: 72
+        x: 165
         y: 0
-        width: 24
-        height: 24
+        width: 55
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +194,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9985211cde7099b43883fba5486e4464
-      internalID: 1676736907
+      spriteID: 68b80b18de6c46a4fae67dcb0502a66b
+      internalID: 857589656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_4
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 0
+        width: 55
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 739e6cfb1def16a4fb15d6d7e401c4fd
+      internalID: 96084039
       vertices: []
       indices: 
       edges: []
@@ -295,14 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dragon_1: -1036996777
-      Dragon_5: 1306356194
-      Dragon_0: 901275640
-      Dragon_6: -1635856593
-      Dragon_3: -729078488
-      Dragon_2: 566379779
-      Dragon_4: 205026511
-      Dragon_7: 1676736907
+      Fire_1: -1753073983
+      Fire_2: -238171371
+      Fire_3: 857589656
+      Fire_4: 96084039
+      Fire_0: -1944839972
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
