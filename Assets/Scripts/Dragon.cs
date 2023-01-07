@@ -11,8 +11,6 @@ public class Dragon : MonoBehaviour
 
 	public bool Done => Delta().magnitude < 0.3;
 
-	Task task = null;
-
 	Rigidbody2D body;
 	Animator animator;
 
