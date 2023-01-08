@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
 	public Inventory inventory;
 	public Highlight highlight;
 
-	private int currentSlot = 0;
+	[Range(0, Inventory.maxInventorySize)]
+	public int currentSlot = 0;
 
 	private int MaxSlotCount => Inventory.maxInventorySize + 1;
 
@@ -77,17 +78,11 @@ public class Player : MonoBehaviour
 		var cellTarget = WorldToCell(target);
 		var action = CreateAction(cellTarget);
 
+		// inout
 		if (Input.GetMouseButtonDown(0))
 			PushAction(action);
-
 		if (Input.GetMouseButtonDown(1))
 			ClearActions();
-
-		if (actionQueue.Count > 0)
-			dragon.target = CellToWorld(actionQueue.First().point);
-
-		if (actionQueue.Count > 0 && dragon.Done)
-			ExecuteAction();
 
 		// highlight current cell
 		if (highlightTilemap.GetTile(cellTarget) == null)
@@ -98,6 +93,14 @@ public class Player : MonoBehaviour
 		}
 		else
 			revertHighlight = false;
+
+		// update target
+		if (actionQueue.Count > 0)
+			dragon.target = CellToWorld(actionQueue.First().point);
+
+		// execute action
+		if (actionQueue.Count > 0 && dragon.Done)
+			ExecuteAction();
 	}
 
 

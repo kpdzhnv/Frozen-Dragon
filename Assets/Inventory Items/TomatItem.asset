@@ -17,4 +17,5 @@ MonoBehaviour:
   growTiles:
   - {fileID: 11400000, guid: 6a88494b30391134cbd8a2d91e0f3c51, type: 2}
   plant: {fileID: 3890823010297032038, guid: 67743d41e6564c54aae81a54638f1b1c, type: 3}
+  icon: {fileID: 21300000, guid: c23eb53c759a234458f55541fb4dd175, type: 3}
   profit: 2
