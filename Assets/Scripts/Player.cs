@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
 		if (activeActions.Contains(point))
 			return MakeErrorAction(point);
 
-		var tile = baseTilemap.GetTile<Tile>(point);
+		var tile = baseTilemap.GetTile(point);
 		if (currentSlot == 0)
 		{
 			if (planted.ContainsKey(point) && planted[point].plant.grown)
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
 			{
 				if (planted.ContainsKey(point)) return false;
 				var cellCenter = CellToWorld(point);
-				var tile = baseTilemap.GetTile<Tile>(point);
+				var tile = baseTilemap.GetTile(point);
 				var item = inventory.TryPlant(slotIndex, tile);
 				if (item == null) return false;
 				planted.Add(point, new PlantedPlant

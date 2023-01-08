@@ -52,14 +52,14 @@ public class Inventory
 		}
 	}
 
-	public Item CanPlant(int slotIndex, Tile tile)
+	public Item CanPlant(int slotIndex, TileBase tile)
 	{
 		if (slotIndex < 0 || slotIndex >= items.Length) return null;
 		if (!items[slotIndex].item.tiles.Contains(tile)) return null;
 		return items[slotIndex].item;
 	}
 
-	public Item TryPlant(int slotIndex, Tile tile)
+	public Item TryPlant(int slotIndex, TileBase tile)
 	{
 		Item item = CanPlant(slotIndex, tile);
 		if (item == null) return null;
