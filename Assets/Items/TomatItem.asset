@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc8fdb457de99fe4486da534198cbcb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 84117f8e2b474d14d9f4cf678eaf8df5, type: 3}
   m_Name: TomatItem
   m_EditorClassIdentifier: 
   tiles:
@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 850ae4a3673938c4cb513b3b11198e9a, type: 2}
   - {fileID: 11400000, guid: b2d2956880b4bda4aaa9314b950e7906, type: 2}
   plant: {fileID: 3890823010297032038, guid: 67743d41e6564c54aae81a54638f1b1c, type: 3}
-  profit: 3
+  profit: 2

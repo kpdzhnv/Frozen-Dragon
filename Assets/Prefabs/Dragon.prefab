@@ -174,11 +174,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
   baseTilemap: {fileID: 0}
-  dragon: {fileID: 3046383318520690893}
-  pointerObject: {fileID: 6707510290640597912, guid: 9d9db640994514b498e53a411124398a, type: 3}
-  testtile: {fileID: 11400000, guid: 7b43c7f6f4d44274bb42003139c6deb2, type: 2}
-  items:
-  - item: {fileID: 11400000, guid: 8cad5d54a28e3e64fabe3a8aaa109227, type: 2}
-    count: 5
-  - item: {fileID: 11400000, guid: ad01067ae5e533842a2e4c99d4f1d6f4, type: 2}
-    count: 3
+  highlightTilemap: {fileID: 0}
+  inventory:
+    items:
+    - item: {fileID: 11400000, guid: 8cad5d54a28e3e64fabe3a8aaa109227, type: 2}
+      count: 3
+    - item: {fileID: 11400000, guid: ce06d0a8ed83f0f40900adaf81e6e2a0, type: 2}
+      count: 2
+    - item: {fileID: 11400000, guid: dd980b9e1bf476b44b0b7d7db2cb83a3, type: 2}
+      count: 3
+  highlight:
+    Walk: {fileID: 11400000, guid: c6304c975a524944d9f2c0d71d37d9f5, type: 2}
+    Error: {fileID: 11400000, guid: afe65e1b1e943964ab09c911cb754d6c, type: 2}
+    Fire: {fileID: 11400000, guid: db364c9f540344d419c9561fae3924f6, type: 2}
+    Plant: {fileID: 11400000, guid: f8583e4548b6ba44092c5e810f8bd025, type: 2}
+    Harvest: {fileID: 11400000, guid: db364c9f540344d419c9561fae3924f6, type: 2}

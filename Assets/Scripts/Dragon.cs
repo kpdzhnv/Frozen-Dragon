@@ -9,7 +9,7 @@ public class Dragon : MonoBehaviour
 	public Vector2 target;
 	public float speed = 1;
 
-	public bool Done => Delta().magnitude < 0.3;
+	public bool Done => Delta().magnitude < 0.1;
 
 	Rigidbody2D body;
 	Animator animator;
@@ -22,7 +22,7 @@ public class Dragon : MonoBehaviour
 
 	// distance to target
 	private Vector2 Delta() {
-		var pos = transform.position;
+		var pos = transform.position - new Vector3(0, 0.5f, 0);
 		return target - new Vector2(pos.x, pos.y);
 	}
 
