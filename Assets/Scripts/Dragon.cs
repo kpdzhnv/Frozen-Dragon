@@ -20,6 +20,7 @@ public class Dragon : MonoBehaviour
 		animator = GetComponent<Animator>();
 	}
 
+	// distance to target
 	private Vector2 Delta() {
 		var pos = transform.position;
 		return target - new Vector2(pos.x, pos.y);

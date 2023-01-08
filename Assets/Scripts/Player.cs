@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
 	public Tile testtile;
 	public CountedItem[] items;
 
-	private bool planting = false;
-	private bool harvest = false;
+	private bool isPlanting = false;
+	private bool isHarvesting = false;
 	private int targetItem = 0;
 	private int currentItem = 0;
 
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 
 	void Plant()
 	{
-		planting = false;
+		isPlanting = false;
 		var gridPos = grid.WorldToCell(dragon.target);
 		gridPos.z = 0;
 		var cellCenter = grid.CellToWorld(gridPos);
@@ -63,11 +63,12 @@ public class Player : MonoBehaviour
 
 	void Harvest()
 	{
-		harvest = false;
+		isHarvesting = false;
 		var gridPos = grid.WorldToCell(dragon.target);
 		gridPos.z = 0;
 		var cellCenter = grid.CellToWorld(gridPos);
 		var tile = baseTilemap.GetTile(gridPos);
+
 		if (planted.ContainsKey(gridPos) && planted[gridPos].plant.grown) {
 			var plantedItem = planted[gridPos];
 			var item = plantedItem.item;
@@ -85,15 +86,19 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
+		// change item on scroll
 		var step = (int)Input.mouseScrollDelta.y;
-		currentItem = (currentItem + step + items.Length) % items.Length;
+		currentItem = (currentItem - step + items.Length) % items.Length;
 		Debug.Log($"currentItem: {items[currentItem].item.name}");
 
+		// highlight the selected tile
 		var target = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 		var gridPos = grid.WorldToCell(target);
 		gridPos.z = 0;
 		var cellCenter = grid.CellToWorld(gridPos);
 		pointer.position = new Vector3(cellCenter.x, cellCenter.y, pointer.position.z);
+
+		// movement on click
 		if (Input.GetAxis("Fire1") > 0)
 		{
 			dragon.target = new Vector2(cellCenter.x, cellCenter.y);
@@ -101,14 +106,16 @@ public class Player : MonoBehaviour
 			var tile = baseTilemap.GetTile(gridPos);
 			ref var countedItem = ref items[targetItem];
 			var item = countedItem.item;
+
 			if (item.tiles.Contains(tile))
-				planting = true;
+				isPlanting = true;
 			if (planted.ContainsKey(gridPos))
-				harvest = true;
+				isHarvesting = true;
 		}
-		if (planting && dragon.Done)
+
+		if (isPlanting && dragon.Done)
 			Plant();
-		if (harvest && dragon.Done)
+		if (isHarvesting && dragon.Done)
 			Harvest();
 	}
 }
