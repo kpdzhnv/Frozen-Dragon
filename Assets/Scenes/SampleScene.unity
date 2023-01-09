@@ -7799,7 +7799,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1098525051}
         m_TargetAssemblyTypeName: UIManagerScript, Assembly-CSharp
-        m_MethodName: OnPlay
+        m_MethodName: OnControls
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7978,7 +7978,10 @@ MonoBehaviour:
   inGameCanvas: {fileID: 243334926}
   pauseCanvas: {fileID: 2019633869}
   dialogueCanvas: {fileID: 63732047}
+  pauseMenu: {fileID: 524842597}
+  controlsMenu: {fileID: 823304179}
   isPaused: 1
+  isInControls: 0
   dialogueStarted: 0
 --- !u!114 &1098525052
 MonoBehaviour:

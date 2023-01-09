@@ -9,17 +9,22 @@ public class UIManagerScript : MonoBehaviour
     public Canvas pauseCanvas;
     public Canvas dialogueCanvas;
 
+    // children of the pauseCanvas
+    public RectTransform pauseMenu;
+    public RectTransform controlsMenu;
+
     GameManagerScript gms;
     Dialogue dialogue;
 
     public bool isPaused;
+    public bool isInControls;
     public bool dialogueStarted = true;
 
     private void Awake()
     {
         gms = GetComponent<GameManagerScript>();
 
-        gms.Pause();
+        // gms.Pause();
 
         dialogue = new Dialogue(0);
         dialogueStarted = true;
@@ -31,9 +36,11 @@ public class UIManagerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
-            if (isPaused && !dialogueStarted)
+            if (isPaused && !dialogueStarted && !isInControls)
                 OnPlay();
-            else if (!dialogueStarted)
+            if (!isPaused && !dialogueStarted)
+                OnPause();
+            if (isInControls)
                 OnPause();
         }
         if (dialogueStarted && (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0)))
@@ -61,11 +68,25 @@ public class UIManagerScript : MonoBehaviour
         inGameCanvas.enabled = false;
         pauseCanvas.enabled = true;
         dialogueCanvas.enabled = false;
+
+        pauseMenu.gameObject.SetActive(true);
+        controlsMenu.gameObject.SetActive(false);
+    }
+    public void OnControls()
+    {
+        isPaused = true;
+        gms.Pause();
+
+        inGameCanvas.enabled = false;
+        pauseCanvas.enabled = true;
+        dialogueCanvas.enabled = false;
+        pauseMenu.gameObject.SetActive(false);
+        controlsMenu.gameObject.SetActive(true);
     }
     public void OnDialogue(Dialogue dialogue)
     {
         isPaused = true;
-        gms.Pause();
+        // gms.Pause();
 
         inGameCanvas.enabled = false;
         pauseCanvas.enabled = false;

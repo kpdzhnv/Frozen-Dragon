@@ -193,11 +193,7 @@ public class Player : MonoBehaviour
 
 	private void PushAction(Action action)
 	{
-		if (action.clip != null)
-		{
-			audioSource.clip = action.clip;
-			audioSource.Play();
-		}
+		
 		if (action.type == Action.Type.Impossible) return;
 		if (activeActions.Contains(action.point)) return;
 		if (actionQueue.Count > 0 && actionQueue.Last().type == Action.Type.Soft)
@@ -228,6 +224,11 @@ public class Player : MonoBehaviour
 	private void ExecuteAction()
 	{
 		var action = actionQueue.First();
+		if (action.clip != null)
+		{
+			audioSource.clip = action.clip;
+			audioSource.Play();
+		}
 		if (action.exec())
 		{
 			actionQueue.RemoveFirst();
