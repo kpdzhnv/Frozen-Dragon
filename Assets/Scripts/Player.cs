@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
 
 	public PreplantedPlant[] preplantedPlant;
 
+	public AudioSource pum;
+
 	public Grid grid;
 	public Tilemap baseTilemap;
 	public Tilemap highlightTilemap;
@@ -178,6 +180,7 @@ public class Player : MonoBehaviour
 
 	private void PushAction(Action action)
 	{
+		pum.Play();
 		if (action.type == Action.Type.Impossible) return;
 		if (activeActions.Contains(action.point)) return;
 		if (actionQueue.Count > 0 && actionQueue.Last().type == Action.Type.Soft)
