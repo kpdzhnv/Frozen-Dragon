@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RadishItem
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: eb599d265dc27cd45bf527d37d994432, type: 2}
+  - {fileID: 11400000, guid: 21d96260b8357dd4ea3bdb1733b09ead, type: 2}
   growTiles:
-  - {fileID: 11400000, guid: 6a88494b30391134cbd8a2d91e0f3c51, type: 2}
+  - {fileID: 11400000, guid: a6987b126e34205428262995c50e0ffd, type: 2}
   plant: {fileID: 8789284095157498666, guid: 704b93769cf75f8469fb0f4a0b554a3e, type: 3}
   icon: {fileID: 21300000, guid: 154b4edb5b4155a4187ae4fd80fa9059, type: 3}
-  profit: 2
-  fireCost: 1
+  profit: 3
+  fireCost: 2

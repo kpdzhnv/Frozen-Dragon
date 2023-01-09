@@ -50,12 +50,11 @@ public class PathFinder
 	public List<Vector3Int> Optimize(List<Vector3Int> path)
 	{
 		List<Vector3Int> optimized = new List<Vector3Int>();
-		var last = path[0];
-		optimized.Add(last);
 		optimized.Add(path[path.Count - 1]);
 		return optimized;
 
 		// TODO: fix
+		var last = path[0];
 		for (int i = 0; i < path.Count; ++i)
 		{
 			while (i < path.Count - 2 && Visible(last, path[i + 1]))
