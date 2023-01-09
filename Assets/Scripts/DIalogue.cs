@@ -11,11 +11,22 @@ public class Dialogue
     public Queue<string> sentences;
     public bool left;
 
-    public string[] dialogues = new string[1]{@"n: Dragon
+    public string[] dialogues = new string[3]
+    {@"n: Dragon
 t: So cold...
 t: What happened?
 t: ...
-t: I must find something to eat."};
+t: I am hungry. I must find something to eat.",
+    @"n: Dragon
+t: Wow, a carrot!
+t: I wabt to eat it right away...
+t: But then I wont have any carrots left.
+t: I should plant it to get more carrots!",
+    @"n: Dragon
+t: Wow, a carrot!
+t: I wabt to eat it right away...
+t: But then I wont have any carrots left.
+t: I should plant it to get more carrots!"};
 
     public Dialogue(int i)
     {

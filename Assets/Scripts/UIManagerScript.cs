@@ -13,14 +13,18 @@ public class UIManagerScript : MonoBehaviour
     Dialogue dialogue;
 
     public bool isPaused;
-    private bool dialogueStarted = false;
+    public bool dialogueStarted = true;
 
     private void Awake()
     {
         gms = GetComponent<GameManagerScript>();
-        OnPause();
+
+        gms.Pause();
+
         dialogue = new Dialogue(0);
-        dialogueStarted = false;
+        dialogueStarted = true;
+        OnDialogue(dialogue);
+        DisplayNextSentence(dialogue);
     }
 
     private void Update()
@@ -32,14 +36,8 @@ public class UIManagerScript : MonoBehaviour
             else if (!dialogueStarted)
                 OnPause();
         }
-        if ((dialogueStarted || !isPaused) && Input.GetKeyDown(KeyCode.F))
+        if (dialogueStarted && (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0)))
         {
-            if (!dialogueStarted)
-            {
-                dialogue = new Dialogue(0);
-                dialogueStarted = true;
-            }
-                
             OnDialogue(dialogue);
             DisplayNextSentence(dialogue);
         }
@@ -75,7 +73,7 @@ public class UIManagerScript : MonoBehaviour
 
     }
 
-    public void DisplayNextSentence(Dialogue dialogue, bool left = true)
+    public void DisplayNextSentence(Dialogue dialogue)
     {
         if (dialogue.SentenceCount() == 0)
         {
@@ -88,7 +86,7 @@ public class UIManagerScript : MonoBehaviour
         TextMeshProUGUI name;
         TextMeshProUGUI text;
 
-        if (left)
+        if (dialogue.left)
         {
             rightDialogue.gameObject.SetActive(false);
             leftDialogue.gameObject.SetActive(true);

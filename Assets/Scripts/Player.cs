@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
 	bool revertHighlight = false;
 	Vector3Int lasthighlight;
 
+	public UIManagerScript uims;
 	void Start()
 	{
 		mainCamera = Camera.main;
@@ -84,6 +85,8 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
+		if (uims.dialogueStarted)
+			return;
 		// revert last highlight
 		if (revertHighlight)
 			highlightTilemap.SetTile(lasthighlight, null);
