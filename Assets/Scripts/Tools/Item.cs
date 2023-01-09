@@ -10,4 +10,5 @@ public class Item : ScriptableObject {
 	public GameObject plant;
 	public Sprite icon;
 	public int profit;
+	public int fireCost;
 }

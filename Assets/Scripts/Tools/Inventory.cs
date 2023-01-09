@@ -30,6 +30,15 @@ public class Inventory
 		return false;
 	}
 
+	private void Add(Slot slot)
+	{
+		var newItems = new Slot[Length + 1];
+		for (int i = 0; i < Length; ++i)
+			newItems[i] = items[i];
+		newItems[Length] = slot;
+		items = newItems;
+	}
+
 	private int IncSlot(int index, int count)
 	{
 		ref var slot = ref items[index];
@@ -43,11 +52,14 @@ public class Inventory
 	{
 		int count = item.profit;
 		for (int i = 0; i < items.Length && count > 0; ++i)
-			if (item == items[i].item)
+			if (item == items[i].item || items[i].count <= 0)
+			{
+				items[i].item = item;
 				count = IncSlot(i, count);
+			}
 		while (count > 0 && items.Length < maxInventorySize)
 		{
-			items.Append(new Slot { item = item, count = 0 });
+			Add(new Slot { item = item, count = 0 });
 			count = IncSlot(Length - 1, count);
 		}
 	}

@@ -6,13 +6,19 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Dragon : MonoBehaviour
 {
-	public Vector2 target;
 	public float speed = 1;
 
-	public bool Done => Delta().magnitude < 0.1;
+	public Animator fire;
+
+	List<Vector2> path = null;
+
+	float stepDelta;
 
 	Rigidbody2D body;
 	Animator animator;
+	int pathPoint = 0;
+
+	public bool Done => path == null || pathPoint >= path.Count;
 
 	void Start()
 	{
@@ -21,9 +27,24 @@ public class Dragon : MonoBehaviour
 	}
 
 	// distance to target
-	private Vector2 Delta() {
-		var pos = transform.position - new Vector3(0, 0.5f, 0);
+	private Vector2 Delta(Vector2 target)
+	{
+		var pos = transform.position;
 		return target - new Vector2(pos.x, pos.y);
+	}
+
+	public void UpdatePath(List<Vector2> path, float delta = 0.1f)
+	{
+		pathPoint = 0;
+		if (path == null || path.Count == 0)
+			this.path = null;
+		this.path = path;
+		this.stepDelta = delta;
+	}
+
+	public void Fire()
+	{
+		fire.SetTrigger("Fire");
 	}
 
 	private void FixedUpdate()
@@ -33,7 +54,14 @@ public class Dragon : MonoBehaviour
 			body.velocity = new Vector3(0, 0);
 			return;
 		}
-		var delta = Delta();
+
+		Vector2 delta = Delta(path[pathPoint]);
+		while (delta.magnitude < stepDelta)
+		{
+			pathPoint += 1;
+			if (Done) return;
+			delta = Delta(path[pathPoint]);
+		}
 		animator.SetBool("Left", delta.x < 0);
 		body.velocity = delta.normalized * speed;
 	}

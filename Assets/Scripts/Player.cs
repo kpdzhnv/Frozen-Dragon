@@ -27,16 +27,28 @@ public class Player : MonoBehaviour
 	class Action
 	{
 		public enum Type { Queue, Soft, Impossible };
-		public Type type { get; set; }
-		public Tile highlight { get; set; }
-		public Vector3Int point { get; set; }
+		public float delta = 0.1f;
+		public Type type;
+		public Tile highlight;
+		public Vector3Int point;
 		public System.Func<bool> exec;
 	}
 
+	[System.Serializable]
+	public struct PreplantedPlant
+	{
+		public Vector3Int point;
+		public Item item;
+	}
+
+	public PreplantedPlant[] preplantedPlant;
 
 	public Grid grid;
 	public Tilemap baseTilemap;
 	public Tilemap highlightTilemap;
+	public Tilemap obastaclTilemap;
+
+	public TileBase snowTile;
 
 	public Inventory inventory;
 	public Highlight highlight;
@@ -53,6 +65,7 @@ public class Player : MonoBehaviour
 	HashSet<Vector3Int> activeActions = new HashSet<Vector3Int>();
 	LinkedList<Action> actionQueue = new LinkedList<Action>();
 
+	PathFinder pathfinder;
 
 	bool revertHighlight = false;
 	Vector3Int lasthighlight;
@@ -61,7 +74,11 @@ public class Player : MonoBehaviour
 	{
 		mainCamera = Camera.main;
 		dragon = GetComponent<Dragon>();
+		pathfinder = new PathFinder(obastaclTilemap);
+		foreach (var p in preplantedPlant)
+			PlantPlant(p.point, p.item);
 	}
+
 
 	void Update()
 	{
@@ -95,14 +112,36 @@ public class Player : MonoBehaviour
 			revertHighlight = false;
 
 		// update target
-		if (actionQueue.Count > 0)
-			dragon.target = CellToWorld(actionQueue.First().point);
-
-		// execute action
 		if (actionQueue.Count > 0 && dragon.Done)
+		{
 			ExecuteAction();
+			if (actionQueue.Count > 0)
+				UpdatePath();
+		}
 	}
 
+	private void UpdatePath()
+	{
+		var action = actionQueue.First();
+		var path = FindPath(action.point);
+		if (path == null)
+			ClearActions();
+		else
+			dragon.UpdatePath(path, action.delta);
+	}
+
+	private List<Vector2> FindPath(Vector3Int target)
+	{
+		var rawPath = pathfinder.Find(WorldToCell(dragon.transform.position), target);
+		if (rawPath == null) return null;
+		rawPath = pathfinder.Optimize(rawPath);
+		return rawPath.Select(v =>
+		{
+			var t = CellToWorld(v);
+			Debug.DrawLine(t, t + new Vector3(0, 0.1f, 0), Color.blue, 10);
+			return new Vector2(t.x, t.y);
+		}).ToList();
+	}
 
 	private Vector3 CellToWorld(Vector3Int point)
 	{
@@ -128,7 +167,7 @@ public class Player : MonoBehaviour
 		foreach (var action in actionQueue)
 			DeleteAction(action);
 		actionQueue.Clear();
-		dragon.target = dragon.transform.position;
+		dragon.UpdatePath(null);
 	}
 
 	private void DeleteAction(Action action)
@@ -149,6 +188,21 @@ public class Player : MonoBehaviour
 		highlightTilemap.SetTile(action.point, action.highlight);
 		activeActions.Add(action.point);
 		actionQueue.AddLast(action);
+
+		if (actionQueue.Count == 1)
+			UpdatePath();
+	}
+
+	void PlantPlant(Vector3Int point, Item item)
+	{
+		var cellCenter = CellToWorld(point);
+		planted.Add(point, new PlantedPlant
+		{
+			item = item,
+			plant = GameObject.Instantiate(item.plant, cellCenter + new Vector3(0, 0.5f, 0), Quaternion.identity).GetComponent<Plant>()
+		});
+		var newTile = item.growTiles[Random.Range(0, item.growTiles.Length)];
+		baseTilemap.SetTile(point, newTile);
 	}
 
 	private void ExecuteAction()
@@ -166,6 +220,24 @@ public class Player : MonoBehaviour
 	private Action CreateAction(Vector3Int point)
 	{
 		if (activeActions.Contains(point))
+			return MakeErrorAction(point);
+		if (pathfinder.Find(WorldToCell(dragon.transform.position), point) == null)
+			return MakeErrorAction(point);
+
+		var obstaclTile = obastaclTilemap.GetTile(point);
+		if (obstaclTile == snowTile)
+		{
+			if (currentSlot <= 0 || (currentSlot - 1) >= inventory.Length)
+				return MakeErrorAction(point);
+
+			ref var slot = ref inventory.items[currentSlot - 1];
+			if (slot.count < slot.item.fireCost)
+				return MakeErrorAction(point);
+
+			return MakeFireAction(point, currentSlot - 1);
+		}
+
+		if (obstaclTile != null)
 			return MakeErrorAction(point);
 
 		var tile = baseTilemap.GetTile(point);
@@ -206,17 +278,10 @@ public class Player : MonoBehaviour
 			exec = () =>
 			{
 				if (planted.ContainsKey(point)) return false;
-				var cellCenter = CellToWorld(point);
 				var tile = baseTilemap.GetTile(point);
 				var item = inventory.TryPlant(slotIndex, tile);
 				if (item == null) return false;
-				planted.Add(point, new PlantedPlant
-				{
-					item = item,
-					plant = GameObject.Instantiate(item.plant, cellCenter + new Vector3(0, 0.5f, 0), Quaternion.identity).GetComponent<Plant>()
-				});
-				var newTile = item.growTiles[Random.Range(0, item.growTiles.Length)];
-				baseTilemap.SetTile(point, newTile);
+				PlantPlant(point, item);
 				return true;
 			}
 		};
@@ -249,14 +314,27 @@ public class Player : MonoBehaviour
 		};
 	}
 
-	Action MakeFireAction(Vector3Int point)
+	Action MakeFireAction(Vector3Int point, int slot)
 	{
 		return new Action
 		{
 			type = Action.Type.Queue,
+			delta = 1f,
 			highlight = highlight.Fire,
 			point = point,
-			exec = () => { throw new System.NotImplementedException(); }
+			exec = () =>
+			{
+				if (inventory.Length <= slot) return false;
+				ref var item = ref inventory.items[slot];
+				if (item.count < item.item.fireCost) return false;
+				var tile = obastaclTilemap.GetTile(point);
+				if (tile != snowTile) return false;
+
+				obastaclTilemap.SetTile(point, null);
+				item.count -= item.item.fireCost;
+				dragon.Fire();
+				return true;
+			}
 		};
 	}
 
@@ -271,4 +349,12 @@ public class Player : MonoBehaviour
 		};
 	}
 
+#if UNITY_EDITOR
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.green;
+		foreach (var p in preplantedPlant)
+			Gizmos.DrawSphere(CellToWorld(p.point) + new Vector3(0, 0.25f, 0), 0.1f);
+	}
+#endif
 }

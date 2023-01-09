@@ -39,13 +39,17 @@ public class InventoryUi : MonoBehaviour
 			var text = textObject.GetComponent<TextMeshProUGUI>();
 
 			var slot = i - 1;
-			if (slot >= 0 && slot < player.inventory.Length)
+			if (slot >= 0 && slot < player.inventory.Length && player.inventory.items[slot].count > 0)
 			{
 				var item = player.inventory.items[slot];
 				image.sprite = item.item.icon;
 				text.text = item.count.ToString();
+				image.color = new Color(1, 1, 1, 1);
 			} else
+			{
+				text.text = "0";
 				image.color = new Color(0, 0, 0, 0);
+			}
 		}
 	}
 }

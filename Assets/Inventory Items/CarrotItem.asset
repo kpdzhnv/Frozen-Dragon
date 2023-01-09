@@ -19,3 +19,4 @@ MonoBehaviour:
   plant: {fileID: 7723197345393972809, guid: 6a964dfb8a98bbf489939a38def989f5, type: 3}
   icon: {fileID: 21300000, guid: 396b2cf6498f75549b47fe5960c92b58, type: 3}
   profit: 2
+  fireCost: 2
