@@ -280,7 +280,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preplantedPlant: []
-  pum: {fileID: 701987611736634278}
+  sounds:
+    pum: {fileID: 8300000, guid: f4bc319590e753242bdbb1909d6ab2f0, type: 3}
+    phh: {fileID: 8300000, guid: d1931511d756adc4a882fc56536ac1a5, type: 3}
+    hhu: {fileID: 8300000, guid: 8cfd4795ff5ae624c95dc8e36481f99e, type: 3}
+  audioSource: {fileID: 701987611736634278}
   grid: {fileID: 0}
   baseTilemap: {fileID: 0}
   highlightTilemap: {fileID: 0}
@@ -301,6 +305,7 @@ MonoBehaviour:
     Plant: {fileID: 11400000, guid: f8583e4548b6ba44092c5e810f8bd025, type: 2}
     Harvest: {fileID: 11400000, guid: db364c9f540344d419c9561fae3924f6, type: 2}
   currentSlot: 0
+  uims: {fileID: 0}
 --- !u!82 &701987611736634278
 AudioSource:
   m_ObjectHideFlags: 0

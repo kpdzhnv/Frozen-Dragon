@@ -14,6 +14,14 @@ public class Player : MonoBehaviour
 	}
 
 	[System.Serializable]
+	public struct Sounds
+	{
+		public AudioClip pum;
+		public AudioClip phh;
+		public AudioClip hhu;
+	}
+
+	[System.Serializable]
 	public struct Highlight
 	{
 		public Tile Walk;
@@ -28,6 +36,7 @@ public class Player : MonoBehaviour
 	{
 		public enum Type { Queue, Soft, Impossible };
 		public float delta = 0.1f;
+		public AudioClip clip;
 		public Type type;
 		public Tile highlight;
 		public Vector3Int point;
@@ -43,7 +52,8 @@ public class Player : MonoBehaviour
 
 	public PreplantedPlant[] preplantedPlant;
 
-	public AudioSource pum;
+	public Sounds sounds;
+	public AudioSource audioSource;
 
 	public Grid grid;
 	public Tilemap baseTilemap;
@@ -183,7 +193,11 @@ public class Player : MonoBehaviour
 
 	private void PushAction(Action action)
 	{
-		pum.Play();
+		if (action.clip != null)
+		{
+			audioSource.clip = action.clip;
+			audioSource.Play();
+		}
 		if (action.type == Action.Type.Impossible) return;
 		if (activeActions.Contains(action.point)) return;
 		if (actionQueue.Count > 0 && actionQueue.Last().type == Action.Type.Soft)
@@ -269,6 +283,7 @@ public class Player : MonoBehaviour
 		{
 			type = Action.Type.Soft,
 			highlight = highlight.Walk,
+			clip = null,
 			point = point,
 			exec = () => { return true; }
 		};
@@ -280,6 +295,7 @@ public class Player : MonoBehaviour
 		{
 			type = Action.Type.Queue,
 			highlight = highlight.Plant,
+			clip = sounds.pum,
 			point = point,
 			exec = () =>
 			{
@@ -299,6 +315,7 @@ public class Player : MonoBehaviour
 		{
 			type = Action.Type.Queue,
 			highlight = highlight.Harvest,
+			clip = sounds.phh,
 			point = point,
 			exec = () =>
 			{
@@ -327,6 +344,7 @@ public class Player : MonoBehaviour
 			type = Action.Type.Queue,
 			delta = 1f,
 			highlight = highlight.Fire,
+			clip = sounds.hhu,
 			point = point,
 			exec = () =>
 			{
@@ -350,6 +368,7 @@ public class Player : MonoBehaviour
 		{
 			type = Action.Type.Impossible,
 			highlight = highlight.Error,
+			clip = null,
 			point = point,
 			exec = () => { throw new System.ApplicationException($"Execute impossible action for {point}"); }
 		};
